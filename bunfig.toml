@@ -1,0 +1,4 @@
+[test]
+root = "./test"
+coverage = true
+coverageThreshold = 0.9
