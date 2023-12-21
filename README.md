@@ -1,9 +1,13 @@
 # SaF Logger
 
-|||
-|-|-|
-|![sfaf](resources/saf-logger.png)|SaF logger is a JSON based logger library written in typescript and made to work within bun ecosystem.|
-
+<p>
+        <table>
+        <tr>
+                <td><img src="./resources/saf-logger.png"></img></td>
+                <td>SaF logger is a JSON based logger library written in typescript and made to work within bun ecosystem.</td>
+        </tr>
+        </table>
+</p>
 
 ## Features
 
