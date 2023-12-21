@@ -1,7 +1,7 @@
 {
   "name": "saf-logger",
   "version": "v0.0.0",
-  "main": "main.ts",
+  "main": "src/main.ts",
   "module": "src/main.ts",
   "devDependencies": {
     "bun-types": "latest",
