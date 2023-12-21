@@ -12,7 +12,7 @@ export default class SafLogger<RequiredArgs extends Record<string, unknown>> {
                 this.name = options.name;
         }
 
-        public write(level: LogLevel, args: Record<string, unknown> & RequiredArgs): void {
+        private write(level: LogLevel, args: Record<string, unknown> & RequiredArgs): void {
                 if (level > this.level) {
                         return
                 };
