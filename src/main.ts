@@ -1,17 +1,18 @@
 import os from 'node:os';
-import { LogLevel } from "./log-utils";
-import { LogArgs } from "./log-types";
+import { LogLevel, getLogLevelFromEnv } from "./log-utils";
 
 export default class SafLogger<RequiredArgs extends Record<string, unknown>> {
-        private level: LogLevel;
+        private level: LogLevel = getLogLevelFromEnv();
         private name: string;
 
         constructor(options: SafLoggerOptions) {
-                this.level = options.level;
+                if (options.level !== undefined) {
+                        this.level = options.level;
+                }
                 this.name = options.name;
         }
 
-        public write(level: LogLevel, args: LogArgs & RequiredArgs): void {
+        public write(level: LogLevel, args: Record<string, unknown> & RequiredArgs): void {
                 if (level > this.level) {
                         return
                 };
@@ -27,14 +28,14 @@ export default class SafLogger<RequiredArgs extends Record<string, unknown>> {
 		console.log(JSON.stringify(logObject));
         }
 
-        public debug = (args: LogArgs & RequiredArgs): void => this.write(LogLevel.DEBUG, args);
-        public info = (args: LogArgs & RequiredArgs): void => this.write(LogLevel.INFO, args);
-        public warn = (args: LogArgs & RequiredArgs): void => this.write(LogLevel.WARN, args);
-        public error = (args: LogArgs & RequiredArgs & { error: unknown }): void => this.write(LogLevel.ERROR, args);
+        public debug = (args: Record<string, unknown> & RequiredArgs): void => this.write(LogLevel.DEBUG, args);
+        public info = (args: Record<string, unknown> & RequiredArgs): void => this.write(LogLevel.INFO, args);
+        public warn = (args: Record<string, unknown> & RequiredArgs): void => this.write(LogLevel.WARN, args);
+        public error = (args: Record<string, unknown> & RequiredArgs & { error: unknown }): void => this.write(LogLevel.ERROR, args);
 }
 
 export type SafLoggerOptions = {
-        level: LogLevel,
+        level?: LogLevel,
         name: string,
 }
 

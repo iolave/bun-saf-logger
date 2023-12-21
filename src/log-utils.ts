@@ -8,3 +8,17 @@ export enum LogLevel {
         DEBUG = 5,
         // SILLY = 6
 }
+
+export function getLogLevelFromEnv(): LogLevel {
+        const envLevel = Bun.env.LOG_LEVEL?.toUpperCase();
+        
+        if (!envLevel) return LogLevel.INFO;
+
+        // @ts-expect-error if an unknown key is passed to
+        // a enum, undefined will be returned
+        const level = LogLevel[envLevel] as LogLevel | undefined;
+        
+        if (level === undefined) return LogLevel.INFO
+
+        return level;
+}

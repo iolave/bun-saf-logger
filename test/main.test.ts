@@ -15,38 +15,46 @@ afterEach(() => {
 });
 
 describe("SafLogger Levels", () => {
+	it("Should replace LOG_LEVEL env", () => {
+		Bun.env.LOG_LEVEL = "SILENT";
+		const logger = new SafLogger({ level: LogLevel.INFO, name });
+		logger.info({ message });
+		expect(console.log).toHaveBeenCalledTimes(1);
+		Bun.env.LOG_LEVEL = undefined;
+	});
+
 	it("Should not log when level is SILENT and info is called", () => {
-		let logger = new SafLogger({ level: LogLevel.SILENT, name });
+		const logger = new SafLogger({ level: LogLevel.SILENT, name });
 		logger.info({ message });
 		expect(console.log).toHaveBeenCalledTimes(0);
 	});
 
 	it("Should not log when level is ERROR and info is called", () => {
-		let logger = new SafLogger({ level: LogLevel.ERROR, name });
+		const logger = new SafLogger({ level: LogLevel.ERROR, name });
 		logger.info({ message });
 		expect(console.log).toHaveBeenCalledTimes(0);
 	});
 
 	it("Should not log when level is WARN and info is called", () => {
-		let logger = new SafLogger({ level: LogLevel.WARN, name });
+		const logger = new SafLogger({ level: LogLevel.WARN, name });
 		logger.info({ message });
 		expect(console.log).toHaveBeenCalledTimes(0);
 	});
 
 	it("Should log when level is INFO and info is called", () => {
-		let logger = new SafLogger({ level: LogLevel.INFO, name });
+		const logger = new SafLogger({ level: LogLevel.INFO, name });
 		logger.info({ message });
 		expect(console.log).toHaveBeenCalledTimes(1);
 	});
 
 	it("Should log when level is DEBUG and info is called", () => {
-		let logger = new SafLogger({ level: LogLevel.DEBUG, name });
+		const logger = new SafLogger({ level: LogLevel.DEBUG, name });
 		logger.info({ message });
 		expect(console.log).toHaveBeenCalledTimes(1);
 	});
 
 	it("Should log when level is DEBUG and debug is called", () => {
-		let logger = new SafLogger({ level: LogLevel.DEBUG, name });
+		const logger = new SafLogger({ level: LogLevel.DEBUG, name });
 		logger.debug({ message });
 		expect(console.log).toHaveBeenCalledTimes(1);
 	});
@@ -54,7 +62,7 @@ describe("SafLogger Levels", () => {
 
 describe("SafLogger.error", () => {
 	it("Should log with args and error", () => {
-		let logger = new SafLogger({ level: LogLevel.DEBUG, name });
+		const logger = new SafLogger({ level: LogLevel.DEBUG, name });
 
 		const tmpObject = {
 			message,
@@ -77,7 +85,7 @@ describe("SafLogger.error", () => {
 
 describe("SafLogger.warn", () => {
 	it("Should log with args and error", () => {
-			let logger = new SafLogger({ level: LogLevel.DEBUG, name });
+		const logger = new SafLogger({ level: LogLevel.DEBUG, name });
 
 		const tmpObject = {
 			message,
@@ -100,7 +108,7 @@ describe("SafLogger.warn", () => {
 
 describe("SafLogger.info", () => {
 	it("Should log with args", () => {
-		let logger = new SafLogger({ level: LogLevel.DEBUG, name });
+		const logger = new SafLogger({ level: LogLevel.DEBUG, name });
 
 		const tmpObject = { message };
 
@@ -120,7 +128,7 @@ describe("SafLogger.info", () => {
 
 describe("SafLogger.debug", () => {
 	it("Should log with args", () => {
-		let logger = new SafLogger({ level: LogLevel.DEBUG, name });
+		const logger = new SafLogger({ level: LogLevel.DEBUG, name });
 
 		const tmpObject = {
 			message,
