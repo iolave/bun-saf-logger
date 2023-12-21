@@ -1,7 +1,7 @@
 {
-  "name": "@iolave/bun-template",
+  "name": "saf-logger",
   "version": "v0.0.0",
-  "main": "main.ts",
+  "main": "src/main.ts",
   "module": "src/main.ts",
   "devDependencies": {
     "bun-types": "latest",
@@ -11,8 +11,6 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "start": "bun lint && bun run ./src/main.ts",
-    "dev": "tsc-watch --noEmit --onSuccess \"bun run ./src/main.ts\"",
     "lint": "tsc --noEmit"
   },
   "type": "module"
