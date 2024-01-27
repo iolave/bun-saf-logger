@@ -7,15 +7,16 @@ export default class SafLogger<RequiredArgs extends Record<string, unknown>> {
         private name?: string;
         private outputOptions: Required<OutputOptions>;
 
-        constructor(options: SafLoggerOptions) {
-                if (options.level !== undefined) this.level = options.level;
+        constructor(options?: SafLoggerOptions) {
+
+                if (options?.level !== undefined) this.level = options.level;
 
                 this.outputOptions = {
-                        outputHostname: notUndefinedBoolean(true, options.outputHostname),
-                        outputLevel: notUndefinedBoolean(true, options.outputLevel),
+                        outputHostname: notUndefinedBoolean(true, options?.outputHostname),
+                        outputLevel: notUndefinedBoolean(true, options?.outputLevel),
                 };
 
-                this.name = options.name;
+                this.name = options?.name;
         }
 
         private write(level: LogLevel, args: Record<string, unknown> & RequiredArgs): void {
