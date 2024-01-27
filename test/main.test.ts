@@ -128,19 +128,19 @@ describe("SafLogger.info", () => {
 
 describe("SafLogger.debug", () => {
 	it("Should log with args", () => {
-		const logger = new SafLogger({ level: LogLevel.DEBUG, name });
+		const logger = new SafLogger({ level: LogLevel.DEBUG, name, outputHostname: true, outputLevel: true });
 
-		const tmpObject = {
+		const logObject = {
 			message,
 		};
 
-		logger.debug(tmpObject);
+		logger.debug(logObject);
 		
 		const trueObject = {
 			name,
 			level: LogLevel.DEBUG,
 			hostname: os.hostname(),
-			...tmpObject,
+			...logObject,
 		}
 
 		expect(console.log).toHaveBeenCalledTimes(1);
