@@ -25,7 +25,10 @@
     "noEmitOnError": true,
     "types": [
       "bun-types" // add Bun global
-    ]
+    ],
+    "paths": {
+      "@helpers/*": [ "./src/helpers/*" ]
+    }
   },
   "buildOptions": {
     "dry": true,

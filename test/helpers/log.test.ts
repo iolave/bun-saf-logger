@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach, afterEach } from "bun:test";
-import { LogLevel, getLogLevelFromEnv } from "../src/log-utils";
+import { LogLevel, getLogLevel } from "../../src/helpers/log";
 
 beforeEach(() => {
         Bun.env.LOG_LEVEL = undefined;
@@ -9,22 +9,22 @@ afterEach(() => {
         Bun.env.LOG_LEVEL = undefined;
 });
 
-describe("getLogLevelFromEnv", () => {
+describe("getLogLevel", () => {
         it("Should return info level when no LOG_LEVEL is defined", () => {
                 Bun.env.LOG_LEVEL = undefined;
-                const level = getLogLevelFromEnv();
+                const level = getLogLevel();
                 expect(level).toBe(LogLevel.INFO);
         });
 
         it("Should return info level when LOG_LEVEL is set to a random string", () => {
                 Bun.env.LOG_LEVEL = "random key";
-                const level = getLogLevelFromEnv();
+                const level = getLogLevel();
                 expect(level).toBe(LogLevel.INFO);
         });
 
         it("Should return error level when LOG_LEVEL is set to error", () => {
                 Bun.env.LOG_LEVEL = "error";
-                const level = getLogLevelFromEnv();
+                const level = getLogLevel();
                 expect(level).toBe(LogLevel.ERROR);
         });
 });

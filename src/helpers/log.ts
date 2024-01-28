@@ -1,3 +1,5 @@
+import { getEnvValue } from "./environment";
+
 export enum LogLevel {
         SILENT = -1,
         ERROR = 0,
@@ -9,13 +11,11 @@ export enum LogLevel {
         // SILLY = 6
 }
 
-export function getLogLevelFromEnv(): LogLevel {
-        const envLevel = Bun.env.LOG_LEVEL?.toUpperCase();
+export function getLogLevel(): LogLevel {
+        const envLevel = getEnvValue<string>("LOG_LEVEL", "INFO").toUpperCase();
         
-        if (!envLevel) return LogLevel.INFO;
-
         // @ts-expect-error if an unknown key is passed to
-        // a enum, undefined will be returned
+        // an enum, undefined will be returned
         const level = LogLevel[envLevel] as LogLevel | undefined;
         
         if (level === undefined) return LogLevel.INFO

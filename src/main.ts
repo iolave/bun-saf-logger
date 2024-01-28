@@ -1,15 +1,17 @@
-import os from 'os';
-import { LogLevel, getLogLevelFromEnv } from "./log-utils";
-import { notUndefinedBoolean } from './boolean-utils';
+import os from "os";
+import { LogLevel, getLogLevel } from "./helpers/log";
+import { notUndefinedBoolean } from "@helpers/boolean";
+import { writeToDisk } from "@helpers/file";
 
 export default class SafLogger<RequiredArgs extends Record<string, unknown>> {
-        private level: LogLevel = getLogLevelFromEnv();
+        private level: LogLevel = getLogLevel();
         private name?: string;
         private outputOptions: Required<OutputOptions>;
+        private logPath?: string;
 
         constructor(options?: SafLoggerOptions) {
-
                 if (options?.level !== undefined) this.level = options.level;
+                this.logPath = options?.logFile;
 
                 this.outputOptions = {
                         outputHostname: notUndefinedBoolean(true, options?.outputHostname),
@@ -27,7 +29,10 @@ export default class SafLogger<RequiredArgs extends Record<string, unknown>> {
                 if (this.outputOptions.outputLevel) logObject["level"] = level;
                 if (this.outputOptions.outputHostname) logObject["hostname"] = os.hostname();
 
-		console.log(JSON.stringify({...logObject, ...args}));
+                const logOutput = JSON.stringify({...logObject, ...args});
+                
+                if (this.logPath) writeToDisk(this.logPath, logOutput);
+		console.log(logOutput);
         }
 
         public debug = (args: Record<string, unknown> & RequiredArgs): void => this.write(LogLevel.DEBUG, args);
@@ -39,7 +44,7 @@ export default class SafLogger<RequiredArgs extends Record<string, unknown>> {
 export type SafLoggerOptions = {
         level?: LogLevel,
         name?: string,
-
+        logFile?: string;
 } & OutputOptions;
 
 type OutputOptions = {
